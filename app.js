@@ -1,10 +1,10 @@
 import express from 'express';
-import path from 'path'; 
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
- 
+
 const app = express();
 const port = 3000;
 // var alert =require('alert')
@@ -17,26 +17,26 @@ const port = 3000;
 // });
 
 const data = [
-  {
-    "id": 1,
-    "name": "xyz",
-    "email": "kavitha@example.com",
-    "age": 28
-  },
-  {
-    "id": 2,
-    "name": "abc",
-    "email": "anitha@example.com",
-    "age": 34
-  },
-  {
-    "id": 3,
-    "name": "yzaa",
-    "email": "nikitha@example.com",
-    "age": 25
-  }
+    {
+        "id": "1",
+        "name": "xyz",
+        "email": "xxxx@example.com",
+        "age": 28
+    },
+    {
+        "id": "2",
+        "name": "abc",
+        "email": "abcss@example.com",
+        "age": 34
+    },
+    {
+        "id": "3",
+        "name": "yzaa",
+        "email": "yyyy@example.com",
+        "age": 25
+    }
 ]
-;
+    ;
 
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 
@@ -55,24 +55,35 @@ app.get("/", (req, res) => {
 }
 )
 
-app.get("/news", (req, res) => {
-    res.render('news')
-}
-)
+// app.get("/news", (req, res) => {
+//     res.render('news')
+// }
+// )
 
 app.get('/users', (req, res) => {
-    let userData = data[0];
-    res.render('users', {id : userData.id, name: userData.name, age : userData.age, email:userData.email})
-
+    // let userData = data[0];
+   
+    // res.render('users', { id: " ", name: userData.name, age: userData.age, email: userData.email })
+   res.render('users', { id: "", name: "", age: "", email: ""})
 })
 
 app.get('/users/:id', (req, res) => {
     let userID = req.params.id;
-    if (userID == null ) {
-        id = 1
-    }
 
-    res.render('users', {id : '1', name:"Test"})
+    const selectedUser = data.filter(user => user.id === userID);
+
+    console.log("User Data", userID, selectedUser);
+
+    if (selectedUser != null && selectedUser.length >=1) {
+        let userData = selectedUser[0];
+        res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
+    } else {
+        try {
+            throw new Error('BROKEN')
+        } catch (err) {
+            next(err)
+        }
+    }
 
 })
 
@@ -93,5 +104,5 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
-    res.status(500).send('Something broke!')
+    res.status(500).render('404')
 })
