@@ -1,4 +1,11 @@
 import express from 'express';
+import path from 'path'; 
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
 
 const app = express();
 const port = 3000;
@@ -12,6 +19,7 @@ const port = 3000;
 // });
 
 
+app.use('/styles', express.static(path.join(__dirname, 'styles')));
 
 // app.use('/', routing);
 
@@ -23,7 +31,7 @@ app.listen(port, () => {
 })
 
 app.get("/", (req, res) => {
-    res.render('home', { name: "test" })
+    res.render('index')
 }
 )
 
