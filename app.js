@@ -1,6 +1,9 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+const posts = require("./data/posts");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ extended: true }));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -62,9 +65,9 @@ app.get("/", (req, res) => {
 
 app.get('/users', (req, res) => {
     // let userData = data[0];
-   
+
     // res.render('users', { id: " ", name: userData.name, age: userData.age, email: userData.email })
-   res.render('users', { id: "", name: "", age: "", email: ""})
+    res.render('users', { id: "", name: "", age: "", email: "" })
 })
 
 app.get('/users/:id', (req, res) => {
@@ -74,7 +77,7 @@ app.get('/users/:id', (req, res) => {
 
     console.log("User Data", userID, selectedUser);
 
-    if (selectedUser != null && selectedUser.length >=1) {
+    if (selectedUser != null && selectedUser.length >= 1) {
         let userData = selectedUser[0];
         res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
     } else {
@@ -86,6 +89,31 @@ app.get('/users/:id', (req, res) => {
     }
 
 })
+
+app
+    .route("/api/users")
+    .get((req, res) => {
+        res.json(users);
+    })
+    .post((req, res) => {
+        if (req.body.name && req.body.username && req.body.email) {
+            if (users.find((u) => u.username == req.body.username)) {
+                res.json({ error: "Username Already Taken" });
+                return;
+            }
+
+            const user = {
+                id: users[users.length - 1].id + 1,
+                name: req.body.name,
+                username: req.body.username,
+                email: req.body.email,
+            };
+
+            users.push(user);
+            res.json(users[users.length - 1]);
+        } else res.json({ error: "Insufficient Data" });
+    });
+
 
 
 app.get("/contact", (req, res) => {
