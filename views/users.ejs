@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/style.css">
+   </head>
+<body>
+ 
+    <%- include('nav') %>
+   <br><br>
+
+    <div class="user-container" id="userDetails">
+        <h2>User Details</h2>
+        <p><strong>ID:</strong> <span id="userID"> <%= id %> </span></p>
+        <p><strong>Name:</strong> <span id="userName"> <%= name %> </span></p>
+        <p><strong>Age:</strong> <span id="userAge"><%= age %></span></p>
+        <p><strong>Email:</strong> <span id="userEmail"><%= email %></span></p>
+    </div>
+
+ 
+</body>
+</html>

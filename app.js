@@ -4,9 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-
-
+ 
 const app = express();
 const port = 3000;
 // var alert =require('alert')
@@ -18,6 +16,27 @@ const port = 3000;
 //     // next();
 // });
 
+const data = [
+  {
+    "id": 1,
+    "name": "xyz",
+    "email": "kavitha@example.com",
+    "age": 28
+  },
+  {
+    "id": 2,
+    "name": "abc",
+    "email": "anitha@example.com",
+    "age": 34
+  },
+  {
+    "id": 3,
+    "name": "yzaa",
+    "email": "nikitha@example.com",
+    "age": 25
+  }
+]
+;
 
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 
@@ -31,6 +50,7 @@ app.listen(port, () => {
 })
 
 app.get("/", (req, res) => {
+    console.log(data)
     res.render('index')
 }
 )
@@ -39,8 +59,20 @@ app.get("/news", (req, res) => {
     res.render('news')
 }
 )
+
 app.get('/users', (req, res) => {
-    res.send('users')
+    let userData = data[0];
+    res.render('users', {id : userData.id, name: userData.name, age : userData.age, email:userData.email})
+
+})
+
+app.get('/users/:id', (req, res) => {
+    let userID = req.params.id;
+    if (userID == null ) {
+        id = 1
+    }
+
+    res.render('users', {id : '1', name:"Test"})
 
 })
 
