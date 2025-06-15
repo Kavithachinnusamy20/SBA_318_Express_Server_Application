@@ -1,7 +1,32 @@
- <nav>
+ <script>
+
+        function registerUser() {
+
+                alert("Test");
+                
+                    fetch('http://localhost:3000/registeruser', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: "newUser",
+                            email: "newuser@example.com",
+                            age: 30
+                        })
+                    })
+                    // .then(response => response.json())
+                    // .then(data => console.log('Success:', data))
+                    // .catch(error => console.error('Error:', error));
+
+        }
+
+    </script>
+
+<nav>
         <h1>Excellent Multicultural School</h1>
         <a href="/">Home</a>
         <a href="/users" >Users</a>
-        <a href="register">Signup User</a>
+        <a href="#" onclick="registerUser()">Signup User</a>
         <!-- <li style="float:right; list-style: none;"><a href="index1.html">About</a></li> -->
     </nav>

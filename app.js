@@ -1,15 +1,22 @@
 import express from 'express';
+// import parser from './parser.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-const posts = require("./data/posts");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({ extended: true }));
+
+import bodyParser from 'body-parser';
+
+
+// const bodyParser = require('body-parser');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = 3000;
+app.use(bodyParser.json()); // Parses JSON request bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parses URL-encoded form data
+
+
 // var alert =require('alert')
 
 
@@ -64,10 +71,10 @@ app.get("/", (req, res) => {
 // )
 
 app.get('/users', (req, res) => {
-    // let userData = data[0];
+    let userData = data[0];
 
-    // res.render('users', { id: " ", name: userData.name, age: userData.age, email: userData.email })
-    res.render('users', { id: "", name: "", age: "", email: "" })
+    res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
+    // res.render('users', { id: "", name: "", age: "", email: "" })
 })
 
 app.get('/users/:id', (req, res) => {
@@ -75,7 +82,7 @@ app.get('/users/:id', (req, res) => {
 
     const selectedUser = data.filter(user => user.id === userID);
 
-    console.log("User Data", userID, selectedUser);
+    // console.log("User Data", userID, selectedUser);
 
     if (selectedUser != null && selectedUser.length >= 1) {
         let userData = selectedUser[0];
@@ -88,31 +95,25 @@ app.get('/users/:id', (req, res) => {
         }
     }
 
-})
+});
 
-app
-    .route("/api/users")
-    .get((req, res) => {
-        res.json(users);
-    })
-    .post((req, res) => {
-        if (req.body.name && req.body.username && req.body.email) {
-            if (users.find((u) => u.username == req.body.username)) {
-                res.json({ error: "Username Already Taken" });
-                return;
-            }
 
-            const user = {
-                id: users[users.length - 1].id + 1,
-                name: req.body.name,
-                username: req.body.username,
-                email: req.body.email,
-            };
+app.post('/registeruser', (req, res) => {
 
-            users.push(user);
-            res.json(users[users.length - 1]);
-        } else res.json({ error: "Insufficient Data" });
-    });
+    const newEntry = req.body;
+    //  console.log ( "newEntry", req.body)
+
+    // Generate new ID based on array length
+    newEntry.id = (data.length + 1).toString();
+
+   console.log ( "newEntry", newEntry)
+    // Add new entry to the array
+    data.push(newEntry);
+
+    res.status(201).json({ message: "Entry added successfully!", data });
+});
+
+
 
 
 
