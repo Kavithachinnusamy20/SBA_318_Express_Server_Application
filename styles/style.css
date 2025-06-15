@@ -110,3 +110,19 @@ nav a {
     transition: ease-in-out;
     text-decoration: none;
 }
+* Form Container */
+form {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    width: 300px;
+}
+
+/* Form Inputs */
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
