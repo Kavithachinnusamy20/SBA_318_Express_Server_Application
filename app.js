@@ -17,14 +17,6 @@ app.use(bodyParser.json()); // Parses JSON request bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parses URL-encoded form data
 
 
-// var alert =require('alert')
-
-
-// app.use("/", (req, res) => {
-//     console.log("First page");
-//     console.log('Request method is', req.method, 'and', req.url, 'url address page is running');
-//     // next();
-// });
 
 const data = [
     {
@@ -71,10 +63,10 @@ app.get("/", (req, res) => {
 // )
 
 app.get('/users', (req, res) => {
-    let userData = data[0];
+    // let userData = data[0];
 
-    res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
-    // res.render('users', { id: "", name: "", age: "", email: "" })
+    // res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
+    res.render('users', { users : data});
 })
 
 app.get('/users/:id', (req, res) => {
@@ -85,8 +77,9 @@ app.get('/users/:id', (req, res) => {
     // console.log("User Data", userID, selectedUser);
 
     if (selectedUser != null && selectedUser.length >= 1) {
-        let userData = selectedUser[0];
-        res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
+        // let userData = selectedUser[0];
+        // res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
+        res.render('users', { users : selectedUser});
     } else {
         try {
             throw new Error('BROKEN')
@@ -98,19 +91,25 @@ app.get('/users/:id', (req, res) => {
 });
 
 
+app.get('/usersignup', (req, res) => {
+    res.render('usersignup', { statusMsg: '' })
+})
+
+
+
 app.post('/registeruser', (req, res) => {
 
     const newEntry = req.body;
-    //  console.log ( "newEntry", req.body)
+    console.log("newEntry", req.body)
 
     // Generate new ID based on array length
     newEntry.id = (data.length + 1).toString();
 
-   console.log ( "newEntry", newEntry)
+    console.log("newEntry", newEntry)
     // Add new entry to the array
     data.push(newEntry);
-
-    res.status(201).json({ message: "Entry added successfully!", data });
+    console.log(data);
+    res.status(201).render("usersignup", { statusMsg: "Entry added successfully!" });
 });
 
 

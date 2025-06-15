@@ -11,13 +11,30 @@
     <%- include('nav') %>
    <br><br>
 
-    <div class="user-container" id="userDetails">
-        <h2>User Details</h2>
-        <p><strong>ID:</strong> <span id="userID"> <%= id %> </span></p>
-        <p><strong>Name:</strong> <span id="userName"> <%= name %> </span></p>
-        <p><strong>Age:</strong> <span id="userAge"><%= age %></span></p>
-        <p><strong>Email:</strong> <span id="userEmail"><%= email %></span></p>
-    </div>
+     <h1>User Details</h1>
+        <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Email</th>
+                        <th>Remove User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user.id %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.age %></td>
+                            <td><%= user.email %></td>
+                            <td><button onclick="delete(<%= user.id %>)" /> Remove  </button> </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+
 
  
 </body>
