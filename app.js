@@ -66,19 +66,15 @@ app.get("/", (req, res) => {
 //Create GET routes for all data that should be exposed to the client.
 app.get('/users', (req, res) => {
 
-        let userID = req.query.id;
-        const selectedUser = data.filter(user => user.id === userID);
-        if (selectedUser != null && selectedUser.length >= 1) {
-            res.render('users', { users: selectedUser });
-        } else {
-             res.render('users', { users: data });
-        }
+    let userID = req.query.id;
+    const selectedUser = data.filter(user => user.id === userID);
+    if (selectedUser != null && selectedUser.length >= 1) {
+        res.render('users', { users: selectedUser });
+    } else {
+        res.render('users', { users: data });
+    }
 
-
-    
 })
-
-
 
 // Rendering the user sign up form 
 app.get('/usersignup', (req, res) => {
@@ -125,8 +121,6 @@ app.patch("/patch/:id", (req, res) => {
     res.json({ message: "Successfully updated.." })
 
 });
-
-
 
 app.use((req, res) => {
     res.status(404).render('404')

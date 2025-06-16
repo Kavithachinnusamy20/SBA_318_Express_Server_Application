@@ -1,7 +1,4 @@
 
-/* body {
-    background-color: rgb(19, 74, 74);
-} */
 
 body {
     border-width: 2px;
@@ -37,13 +34,6 @@ body {
 
 }
 
-img {
-    height: 50px;
-    width: 50px;
-    position: absolute;
-    left: 150px;
-    top: -20px;
-}
 
 .button {
     background-color: rgb(12, 12, 169);
@@ -54,25 +44,9 @@ img {
     font-weight: bold;
 }
 
-.button:hover {
+/* .button:hover {
     background-color: rgb(243, 21, 39);
-}
-
-
-
-.center {
-    background-color: rgb(221, 217, 217);
-    text-align: center;
-    height: 40px;
-    width: 300px;
-}
-
-.forget-password {
-    color: rgb(98, 0, 255);
-    text-align: center;
-    font-size: 22px;
-    font-weight: bolder;
-}
+} */
 
 input::placeholder {
     font-size: 18px;
@@ -94,7 +68,7 @@ p {
 nav {
     padding: 10px;
 
-    background-color: rgb(83, 137, 119);
+    background-color: rgb(154, 176, 125);
     cursor: pointer;
     transition-timing-function:ease-in-out ;
 
