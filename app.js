@@ -66,24 +66,19 @@ app.get("/", (req, res) => {
 //Create GET routes for all data that should be exposed to the client.
 app.get('/users', (req, res) => {
 
-    res.render('users', { users: data });
+        let userID = req.query.id;
+        const selectedUser = data.filter(user => user.id === userID);
+        if (selectedUser != null && selectedUser.length >= 1) {
+            res.render('users', { users: selectedUser });
+        } else {
+             res.render('users', { users: data });
+        }
+
+
+    
 })
 
-//using filter get data corresponding selecteduser dispaly
-app.get('/users/:id', (req, res) => {
-    let userID = req.params.id;
-    const selectedUser = data.filter(user => user.id === userID);
-    if (selectedUser != null && selectedUser.length >= 1) {
-        res.render('users', { users: selectedUser });
-    } else {
-        try {
-            throw new Error('BROKEN')
-        } catch (err) {
-            next(err)
-        }
-    }
 
-});
 
 // Rendering the user sign up form 
 app.get('/usersignup', (req, res) => {
