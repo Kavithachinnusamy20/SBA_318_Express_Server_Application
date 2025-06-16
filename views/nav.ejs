@@ -1,9 +1,32 @@
+<script>
+    // function deleteUser(userID) {
+    //     alert("Selected User ID to delete :" + userID);
+    // }
 
+    function deleteUser(id) {
+
+        fetch("http://localhost:3000/delete/" + id, {
+            method: "DELETE"
+        }).then(response => response.json())
+            .then(data => {
+                // alert("inside")
+                window.location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+
+        // alert("Selected User ID to delete :" + id);
+    }
+
+
+
+
+
+</script>
 
 <nav>
-    <h1>Excellent Multicultural School</h1>
+    <h1>Marlboro Multicultural School</h1>
     <a href="/">Home</a>
-    <a href="/users" >Users</a>
+    <a href="/users">Users</a>
     <a href="/usersignup">New User</a>
-    
+
 </nav>

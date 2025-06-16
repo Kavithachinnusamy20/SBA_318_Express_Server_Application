@@ -29,7 +29,7 @@
                             <td><%= user.name %></td>
                             <td><%= user.age %></td>
                             <td><%= user.email %></td>
-                            <td><button onclick="delete(<%= user.id %>)" /> Remove  </button> </td>
+                            <td><button class="remove-btn" onclick="deleteUser(<%= user.id %>)" /> Remove  </button> </td>
                         </tr>
                     <% }); %>
                 </tbody>

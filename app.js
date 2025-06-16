@@ -7,9 +7,13 @@ import bodyParser from 'body-parser';
 
 
 // const bodyParser = require('body-parser');
+// converts the module's URL into a file path
 
 const __filename = fileURLToPath(import.meta.url);
+// extracts the directory name from the file path.
+
 const __dirname = path.dirname(__filename);
+
 
 const app = express();
 const port = 3000;
@@ -39,7 +43,7 @@ const data = [
     }
 ]
     ;
-
+//include style sheet into the program
 app.use('/styles', express.static(path.join(__dirname, 'styles')));
 
 // app.use('/', routing);
@@ -50,36 +54,27 @@ app.set("view engine", "ejs")
 app.listen(port, () => {
     console.log('server listening at port ${port}')
 })
-
+//Create GET routes for all data that should be exposed to the client.
 app.get("/", (req, res) => {
     console.log(data)
     res.render('index')
 }
 )
 
-// app.get("/news", (req, res) => {
-//     res.render('news')
-// }
-// )
 
+//render users.ejs in browser
+//Create GET routes for all data that should be exposed to the client.
 app.get('/users', (req, res) => {
-    // let userData = data[0];
 
-    // res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
-    res.render('users', { users : data});
+    res.render('users', { users: data });
 })
 
+//using filter get data corresponding selecteduser dispaly
 app.get('/users/:id', (req, res) => {
     let userID = req.params.id;
-
     const selectedUser = data.filter(user => user.id === userID);
-
-    // console.log("User Data", userID, selectedUser);
-
     if (selectedUser != null && selectedUser.length >= 1) {
-        // let userData = selectedUser[0];
-        // res.render('users', { id: userData.id, name: userData.name, age: userData.age, email: userData.email })
-        res.render('users', { users : selectedUser});
+        res.render('users', { users: selectedUser });
     } else {
         try {
             throw new Error('BROKEN')
@@ -90,15 +85,14 @@ app.get('/users/:id', (req, res) => {
 
 });
 
-
+// Rendering the user sign up form 
 app.get('/usersignup', (req, res) => {
     res.render('usersignup', { statusMsg: '' })
 })
 
-
-
+//Create POST routes for data
+//Create POST routes for data, as appropriate. At least one data category should allow for client creation via a POST request.
 app.post('/registeruser', (req, res) => {
-
     const newEntry = req.body;
     console.log("newEntry", req.body)
 
@@ -112,24 +106,39 @@ app.post('/registeruser', (req, res) => {
     res.status(201).render("usersignup", { statusMsg: "Entry added successfully!" });
 });
 
+//create delete routes for data
+//Create DELETE routes for data, as appropriate. At least one data category should allow for client deletion via a DELETE request.
+app.delete("/delete/:id", (req, res) => {
+    console.log("deleete API", req.params.id)
+    const user = data.find((u, i) => {
+        if (u.id == req.params.id) {
+            data.splice(i, 1);
+        }
+    });
+    res.json({ message: "Successfully deleted.." })
+    // deleteuser()
+});
 
 
+//Create PATCH or PUT routes for data, as appropriate. At least one data category should allow for client manipulation via a PATCH or PUT request.
+app.patch("/patch/:id", (req, res) => {
+    const user = data.find((u, i) => {
+        if (u.id == req.params.id) {
+            data.splice(i, 1);
+        }
+    });
+    res.json({ message: "Successfully updated.." })
 
+});
 
-app.get("/contact", (req, res) => {
-    try {
-        throw new Error('BROKEN')
-    } catch (err) {
-        next(err)
-    }
-
-})
 
 
 app.use((req, res) => {
     res.status(404).render('404')
 })
 
+
+// Create and use error-handling middleware.
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).render('404')
